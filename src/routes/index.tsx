@@ -1,23 +1,29 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { DashboardHero } from "@/components/dashboard/DashboardHero";
+import { StatsOverview } from "@/components/dashboard/StatsOverview";
+import { RecentReports } from "@/components/dashboard/RecentReports";
+import { DEMO_REPORTS } from "@/data/demo-reports";
 
-// The home route ships no og:image, so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "LabSense AI — Your health results, made understandable" },
+      { name: "description", content: "Turn complex lab reports into clear explanations, spot unusual values, and prepare questions for your doctor." },
+      { property: "og:title", content: "LabSense AI — Your health results, made understandable" },
+      { property: "og:description", content: "Turn complex lab reports into clear explanations, spot unusual values, and prepare questions for your doctor." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: Overview,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Overview() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="mx-auto max-w-[1280px] space-y-8">
+      <DashboardHero />
+      <StatsOverview />
+      <RecentReports reports={DEMO_REPORTS} />
     </div>
   );
 }
