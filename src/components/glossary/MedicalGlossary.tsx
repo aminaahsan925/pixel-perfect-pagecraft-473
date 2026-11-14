@@ -14,10 +14,10 @@ interface Props {
 }
 
 export function MedicalGlossary({ query, letter, onQuery, onLetter }: Props) {
-  const available = useMemo(() => new Set(GLOSSARY.map((g) => g.term[0].toUpperCase())), []);
+  const available = useMemo(() => new Set(GLOSSARY.map((g) => g.term.charAt(0).toUpperCase())), []);
   const q = query.trim().toLowerCase();
   const entries = GLOSSARY.filter((g) => {
-    if (letter && g.term[0].toUpperCase() !== letter) return false;
+    if (letter && g.term.charAt(0).toUpperCase() !== letter) return false;
     if (!q) return true;
     return [g.term, ...g.aka, g.category].some((s) => s.toLowerCase().includes(q));
   }).sort((a, b) => a.term.localeCompare(b.term));

@@ -19,8 +19,8 @@ export function buildDoctorQuestions(results: AnalyzedResult[], max = 5): string
     q.push(`My ${name(r)} result (${r.value} ${r.unit}) is above the reference range. What could explain this?`);
   for (const r of low)
     q.push(`My ${name(r)} result (${r.value} ${r.unit}) is below the reference range. What could explain this, and does it need follow-up?`);
-  if (outOfRange.length >= 2)
-    q.push(`Should my ${name(outOfRange[0])} and ${name(outOfRange[1])} results be reviewed together?`);
+  const [first, second] = outOfRange;
+  if (first && second) q.push(`Should my ${name(first)} and ${name(second)} results be reviewed together?`);
   if (outOfRange.length >= 1) q.push("Should any of these tests be repeated, and when?");
   for (const r of unclassified)
     q.push(`My ${name(r)} result could not be classified from the provided files. Which reference range applies to me?`);

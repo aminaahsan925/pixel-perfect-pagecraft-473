@@ -81,4 +81,4 @@ export function getDemoReport(id: string): LabReport | undefined {
   return DEMO_REPORTS.find((r) => r.id === id && r.patient.id === DEMO_PATIENT_ID);
 }
 
-export const SAMPLE_REPORT_ID = DEMO_REPORTS[0].id;
+export const SAMPLE_REPORT_ID = "cbc-metabolic-2026-11";

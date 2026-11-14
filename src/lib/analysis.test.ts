@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { analyzeReport, analyzeResult, resolveTestName } from "./analysis";
 import { buildDoctorQuestions } from "./questions";
-import { DEMO_REPORTS, getDemoReport } from "@/data/demo-reports";
+import { SAMPLE_REPORT_ID, getDemoReport } from "@/data/demo-reports";
 
 const adultFemale = { age: 34, sex: "female" as const };
 
@@ -71,14 +71,16 @@ describe("result classification", () => {
 
 describe("patient context", () => {
   it("only returns reports that belong to the active demo patient", () => {
-    expect(getDemoReport(DEMO_REPORTS[0].id)).toBeDefined();
+    expect(getDemoReport(SAMPLE_REPORT_ID)).toBeDefined();
     expect(getDemoReport("someone-elses-report")).toBeUndefined();
   });
 });
 
 describe("doctor questions", () => {
   it("puts urgent results first and returns at most 5 questions", () => {
-    const qs = buildDoctorQuestions(analyzeReport(DEMO_REPORTS[0]));
+    const report = getDemoReport(SAMPLE_REPORT_ID);
+    if (!report) throw new Error("sample report missing");
+    const qs = buildDoctorQuestions(analyzeReport(report));
     expect(qs.length).toBeLessThanOrEqual(5);
     expect(qs[0]).toContain("Potassium");
     expect(qs[0]).toContain("urgent");

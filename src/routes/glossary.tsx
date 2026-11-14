@@ -3,14 +3,14 @@ import { MedicalGlossary } from "@/components/glossary/MedicalGlossary";
 import { GLOSSARY } from "@/data/glossary";
 
 interface GlossarySearch {
-  q?: string;
-  letter?: string;
+  q?: string | undefined;
+  letter?: string | undefined;
 }
 
 export const Route = createFileRoute("/glossary")({
   validateSearch: (search: Record<string, unknown>): GlossarySearch => ({
-    q: typeof search.q === "string" && search.q ? search.q : undefined,
-    letter: typeof search.letter === "string" && /^[A-Z]$/.test(search.letter) ? search.letter : undefined,
+    q: typeof search["q"] === "string" && search["q"] ? search["q"] : undefined,
+    letter: typeof search["letter"] === "string" && /^[A-Z]$/.test(search["letter"]) ? search["letter"] : undefined,
   }),
   head: () => ({
     meta: [

@@ -3,7 +3,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { SOURCE_DOCUMENTS } from "@/data/sources";
 import type { SourceId } from "@/data/types";
 
-export function SourceChip({ id, detail }: { id: SourceId; detail?: string }) {
+export function SourceChip({ id, detail }: { id: SourceId; detail?: string | undefined }) {
   const doc = SOURCE_DOCUMENTS[id];
   return (
     <Popover>

@@ -7,11 +7,12 @@ import { Logo } from "@/components/brand/Logo";
 import { SidebarNav } from "./SidebarNav";
 import { pageTitle } from "./nav-items";
 import { cn } from "@/lib/utils";
+import { SAMPLE_REPORT_ID } from "@/data/demo-reports";
 
 const INITIAL_NOTIFICATIONS = [
-  { id: 1, title: "Analysis ready", body: "Complete Blood Count & Metabolic Panel has been explained.", to: "/reports/cbc-metabolic-2026-11" },
-  { id: 2, title: "1 urgent value identified", body: "Review the highlighted result and contact a professional.", to: "/reports/cbc-metabolic-2026-11" },
-  { id: 3, title: "Glossary updated", body: "Plain-language entries for liver tests were added.", to: "/glossary" },
+  { id: 1, title: "Analysis ready", body: "Complete Blood Count & Metabolic Panel has been explained.", reportId: SAMPLE_REPORT_ID },
+  { id: 2, title: "1 urgent value identified", body: "Review the highlighted result and contact a professional.", reportId: SAMPLE_REPORT_ID },
+  { id: 3, title: "Glossary updated", body: "Plain-language entries for liver tests were added.", reportId: null },
 ] as const;
 
 export function TopNavigation() {
@@ -23,7 +24,8 @@ export function TopNavigation() {
 
   const onSearch = (e: FormEvent) => {
     e.preventDefault();
-    navigate({ to: "/glossary", search: { q: query.trim() || undefined } });
+    const q = query.trim();
+    navigate({ to: "/glossary", search: q ? { q } : {} });
   };
 
   return (
@@ -96,7 +98,9 @@ export function TopNavigation() {
               {INITIAL_NOTIFICATIONS.map((n) => (
                 <li key={n.id}>
                   <Link
-                    to={n.to}
+                    {...(n.reportId
+                      ? { to: "/reports/$reportId" as const, params: { reportId: n.reportId } }
+                      : { to: "/glossary" as const, search: {} })}
                     onClick={() => setUnread((u) => u.filter((x) => x !== n.id))}
                     className="flex gap-3 px-4 py-3 transition-colors hover:bg-muted"
                   >
